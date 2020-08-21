@@ -5,7 +5,6 @@
 library(httr)
 library(readr)
 library(progress)
-library(dict)
 
 library(reticulate)
 use_python('/usr/local/opt/python/bin/python3.7', required = T)

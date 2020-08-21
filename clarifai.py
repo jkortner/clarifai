@@ -6,7 +6,7 @@ from clarifai_grpc.grpc.api.status import status_pb2, status_code_pb2
 
 import pandas as pd
 
-# Clarifai Python gRPC Client
+# Clarifai Python gRPC client
 def clarifai_demographics(path_to_jpg, api_key):
 
     channel = ClarifaiChannel.get_json_channel()
@@ -41,6 +41,7 @@ def clarifai_demographics(path_to_jpg, api_key):
     return output
     
     
+# make df from list of dictionaries    
 def d_list_to_df(d_list):
     
     df = pd.DataFrame(d_list)
