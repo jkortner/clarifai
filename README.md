@@ -1,4 +1,4 @@
-# face2race
+# R interface to Clarifai's demographics model
 
 This repository provides some code to label faces according to their race / ethnicity. It uses the [Clarifai demographics model](https://www.clarifai.com/models/demographics-image-recognition-model-c0c0ac362b03416da06ab3fa36fb58e3). 
 
