@@ -7,7 +7,7 @@ from clarifai_grpc.grpc.api.status import status_pb2, status_code_pb2
 import pandas as pd
 
 # Clarifai Python gRPC client
-def clarifai_demographics(path_to_jpg, api_key):
+def clarifai_demographics(path_to_jpg, api_key, model_name):
 
     channel = ClarifaiChannel.get_json_channel()
     stub = service_pb2_grpc.V2Stub(channel)
@@ -16,10 +16,10 @@ def clarifai_demographics(path_to_jpg, api_key):
     with open(path_to_jpg, 'rb') as f:
         file_bytes = f.read()
 
-    post_model_outputs_response = stub.PostModelOutputs(
-        service_pb2.PostModelOutputsRequest(
+    post_workflow_results_response = stub.PostWorkflowResults(
+        service_pb2.PostWorkflowResultsRequest(
             # demographics model
-            model_id= 'c0c0ac362b03416da06ab3fa36fb58e3',
+            workflow_id= 'Demographics',
             inputs=[
                 resources_pb2.Input(
                     data=resources_pb2.Data(
@@ -33,12 +33,17 @@ def clarifai_demographics(path_to_jpg, api_key):
         metadata=metadata
     )
 
-    if post_model_outputs_response.status.code != status_code_pb2.SUCCESS:
-        raise Exception(post_model_outputs_response.status.description)
+    if post_workflow_results_response.status.code != status_code_pb2.SUCCESS:
+        raise Exception("Post workflow results failed, status: " + post_workflow_results_response.status.description)
 
-    output = post_model_outputs_response.outputs[0]
-        
-    return output
+    results = post_workflow_results_response.results[0]
+    
+    for output in results.outputs:
+        model = output.model
+        if model.name == model_name: # 'multicultural-appearance' / 'gender-appearance'
+            output_to_return = output
+
+    return output_to_return
     
     
 # make df from list of dictionaries    
