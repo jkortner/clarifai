@@ -16,7 +16,7 @@ source_python("clarifai/clarifai.py")
 api_key <- read_file('clarifai/clarifai-api-key-new.txt')
 
 # function
-face2race <- function(jpg_path, api_key) {
+face2gender <- function(jpg_path, api_key) {
   
   output <- clarifai_demographics(jpg_path, api_key, 'gender-appearance')
   
